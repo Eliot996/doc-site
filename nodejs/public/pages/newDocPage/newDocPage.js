@@ -28,4 +28,14 @@ function updateSegment(input, preview) {
     preview.innerText = input.value || "No input yet";
 }
 
+function save() {
+    fetch("/api/segments", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({title: document.getElementById("title").value}),
+    });
+}
+
 document.getElementById("title").addEventListener("input", () => updateSegment(document.getElementById("title"), document.getElementById("docTitle")));
