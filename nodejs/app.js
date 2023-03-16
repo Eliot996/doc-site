@@ -9,6 +9,10 @@ app.get("/", (req, res) => {
     res.sendFile(path.resolve("public/pages/frontpage/frontpage.html"));
 });
 
+app.get("/new", (req, res) => {
+    res.sendFile(path.resolve("public/pages/newDocPage/newDocPage.html"));
+});
+
 const PORT = 8080;
 app.listen(PORT, (error) => {
     if (error) {
