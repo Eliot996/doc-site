@@ -3,8 +3,12 @@ const segments = [];
 let segmentCount = 0;
 
 function addTextSegment() {
-    const segmentObject = { type: "text", sequence: segmentCount++, content: "" }
-    segments.push(segmentObject);
+    segments.push( { type: "text", sequence: segmentCount++, content: "" } );
+    drawSegments();
+}
+
+function addCodeSegment() {
+    segments.push( { type: "code", sequence: segmentCount++, content: "" } );
     drawSegments();
 }
 
@@ -21,15 +25,42 @@ function drawSegments() {
     sortedSegments.forEach((segment) => {
         if (segment.type === "text") {
             drawTextSegment(segment);
+        } else if (segment.type === "code") {
+            drawCodeSegment(segment);
         }
     });
+}
+
+function drawCodeSegment (segment) {
+    const newSegment = document.createElement("div");
+    
+    let label = document.createElement("h3");
+    label.innerText = "Code";
+
+    let input = document.createElement("textarea");
+    input.cols = 40;
+    input.rows = 5;
+    input.value = segment.content
+    
+    const pre = document.createElement("pre");
+    let preview = document.createElement("code");
+    preview.innerText = segment.content || "No input yet";
+
+    newSegment.appendChild(label);
+    newSegment.appendChild(input);
+    pre.appendChild(preview);
+    newSegment.appendChild(pre);
+    
+    segmentsDiv.appendChild(newSegment);
+
+    newSegment.addEventListener("input", () => updateSegment(input, preview, segment));
 }
 
 function drawTextSegment(segment) {
     const newSegment = document.createElement("div");
     
     let label = document.createElement("h3");
-    label.innerText = "label for segment: ";
+    label.innerText = "Text";
 
     let input = document.createElement("textarea");
     input.cols = 40;
