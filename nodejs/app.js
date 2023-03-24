@@ -12,12 +12,16 @@ app.get("/", (req, res) => {
     res.sendFile(path.resolve("public/pages/frontpage/frontpage.html"));
 });
 
+app.get("/docs/:pageTitle", (req, res) => {
+    res.send(docPages.get(req.params.pageTitle));
+});  
+
 app.get("/new", (req, res) => {
     res.sendFile(path.resolve("public/pages/newDocPage/newDocPage.html"));
 });  
 
 app.post("/api/segments", (req, res) => {
-    console.log(req.body);
+    docPages.create(req.body);
     res.sendStatus(200);
 });  
 
