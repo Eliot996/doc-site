@@ -16,6 +16,10 @@ function updateSegment(input, preview, segment) {
     const value = input.value || "No input yet"; 
     preview.innerText = value; 
     segment.content = value;
+
+    // adjustment of input text box height
+    input.style.height = "1px";
+    input.style.height = (input.scrollHeight)+"px";
 }
 
 function drawSegments() {
@@ -39,8 +43,7 @@ function drawCodeSegment (segment) {
 
     let input = document.createElement("textarea");
     input.cols = 40;
-    input.rows = 5;
-    input.value = segment.content
+    input.value = segment.content;
     
     const pre = document.createElement("pre");
     let preview = document.createElement("code");
@@ -64,8 +67,7 @@ function drawTextSegment(segment) {
 
     let input = document.createElement("textarea");
     input.cols = 40;
-    input.rows = 5;
-    input.value = segment.content
+    input.value = segment.content;
     
     let preview = document.createElement("p");
     preview.innerText = segment.content || "No input yet";
@@ -77,6 +79,11 @@ function drawTextSegment(segment) {
     segmentsDiv.appendChild(newSegment);
 
     newSegment.addEventListener("input", () => updateSegment(input, preview, segment));
+}
+
+function auto_height(elem) { 
+    elem.style.height = "1px";
+    elem.style.height = (elem.scrollHeight)+"px";
 }
 
 function save() {
