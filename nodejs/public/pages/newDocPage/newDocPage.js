@@ -1,4 +1,5 @@
-const segments = document.getElementById("segments");
+const segmentsDiv = document.getElementById("segments");
+const segments = [];
 
 function addSegment() {
     const newSegment = document.createElement("div");
@@ -19,13 +20,18 @@ function addSegment() {
     newSegment.appendChild(input);
     newSegment.appendChild(preview);
 
-    segments.appendChild(newSegment);
+    segmentsDiv.appendChild(newSegment);
+    
+    const segmentObject = { type: "text", sequence: "-1", content: "" }
+    segments.push(segmentObject);
 
-    newSegment.addEventListener("input", () => updateSegment(input, preview));
+    newSegment.addEventListener("input", () => updateSegment(input, preview, segmentObject));
 }
 
-function updateSegment(input, preview) {
-    preview.innerText = input.value || "No input yet";
+function updateSegment(input, preview, segmentObject) {
+    const value = input.value || "No input yet"; 
+    preview.innerText = value; 
+    segmentObject.content = value;
 }
 
 function save() {
@@ -34,8 +40,11 @@ function save() {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({title: document.getElementById("title").value}),
+        body: JSON.stringify({title: document.getElementById("title").value, segments: segments}),
     });
 }
 
-document.getElementById("title").addEventListener("input", () => updateSegment(document.getElementById("title"), document.getElementById("docTitle")));
+document.getElementById("title").addEventListener("input", 
+    () => updateSegment(
+        document.getElementById("title"), 
+        document.getElementById("docTitle")));
