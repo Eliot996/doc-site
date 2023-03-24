@@ -1,37 +1,51 @@
 const segmentsDiv = document.getElementById("segments");
 const segments = [];
+let segmentCount = 0;
 
-function addSegment() {
+function addTextSegment() {
+    const segmentObject = { type: "text", sequence: segmentCount++, content: "" }
+    segments.push(segmentObject);
+    drawSegments();
+}
+
+function updateSegment(input, preview, segment) {
+    const value = input.value || "No input yet"; 
+    preview.innerText = value; 
+    segment.content = value;
+}
+
+function drawSegments() {
+    segmentsDiv.innerHTML = "";
+    const sortedSegments = segments.sort((a, b) => a - b);
+
+    sortedSegments.forEach((segment) => {
+        if (segment.type === "text") {
+            drawTextSegment(segment);
+        }
+    });
+}
+
+function drawTextSegment(segment) {
     const newSegment = document.createElement("div");
     
-    let label = document.createElement("label");
-    label.for = "segment";
+    let label = document.createElement("h3");
     label.innerText = "label for segment: ";
 
-    let input = document.createElement("input");
-    input.type = "text";
-    input.id = "segment";
+    let input = document.createElement("textarea");
+    input.cols = 40;
+    input.rows = 5;
+    input.value = segment.content
     
     let preview = document.createElement("p");
-    preview.id = "segmentPreview";
-    preview.innerText = "No input yet";
+    preview.innerText = segment.content || "No input yet";
 
     newSegment.appendChild(label);
     newSegment.appendChild(input);
     newSegment.appendChild(preview);
-
-    segmentsDiv.appendChild(newSegment);
     
-    const segmentObject = { type: "text", sequence: "-1", content: "" }
-    segments.push(segmentObject);
+    segmentsDiv.appendChild(newSegment);
 
-    newSegment.addEventListener("input", () => updateSegment(input, preview, segmentObject));
-}
-
-function updateSegment(input, preview, segmentObject) {
-    const value = input.value || "No input yet"; 
-    preview.innerText = value; 
-    segmentObject.content = value;
+    newSegment.addEventListener("input", () => updateSegment(input, preview, segment));
 }
 
 function save() {
