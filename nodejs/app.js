@@ -1,7 +1,7 @@
 import express from "express";
 import path from "path";
 
-import docPages from "./docPages/docPages.js"
+import docPages from "./utils/docPages/docPages.js"
 
 const app = express();
 
