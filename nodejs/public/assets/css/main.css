@@ -62,3 +62,15 @@ body {
 #side-panel a:hover {
     width: 100%;
 }
+
+#main-content {
+    padding: .5em 1.5em;
+}
+
+#main-content p {
+    padding: .5em 1.5em;
+}
+
+#code {
+    padding: .5em 1.5em;
+}
