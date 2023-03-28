@@ -3,8 +3,12 @@ import fs from "fs";
 import segments from "./segments/segments.js";
 import templateEngine from "../templateEngine/templateEngine.js";
 
-import pages from "./pages.json" assert {type: "json"};
+const pages = JSON.parse(fs.readFileSync("./utils/docPages/pages.json"));
 
+pages.forEach(page => {
+    page.segments = segments.get(page.id); 
+    page.compiledPage = templateEngine.buildAndPopulateDocPage(page);
+});
 
 let pageCount = pages.reduce((accumulator, current) => accumulator < current.id ? current.id : accumulator, 0);
 
@@ -23,7 +27,7 @@ function get(pageTitle) {
         foundPage.segments = segments.get(foundPage.id);
     }
 
-    return foundPage.compiledPage || templateEngine.buildAndPopulateDocPage(foundPage);
+    return foundPage.compiledPage;
 }
 
 function getAll() {
