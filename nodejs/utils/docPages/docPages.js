@@ -5,6 +5,7 @@ import templateEngine from "../templateEngine/templateEngine.js";
 
 import pages from "./pages.json" assert {type: "json"};
 
+
 let pageCount = pages.reduce((accumulator, current) => accumulator < current.id ? current.id : accumulator, 0);
 
 function create(page) {
@@ -26,7 +27,11 @@ function get(pageTitle) {
 }
 
 function save() {
-    fs.writeFileSync("./utils/docpages/pages.json", JSON.stringify(pages));
+    fs.writeFileSync("./utils/docpages/pages.json", JSON.stringify(
+        pages.map((page) => {
+            return {...page, compiledPage: ""}}
+        )
+    ));
     segments.save();
 }
 
