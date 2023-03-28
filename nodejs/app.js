@@ -25,6 +25,11 @@ app.post("/api/segments", (req, res) => {
     res.sendStatus(200);
 });  
 
+app.get("/api/save", (req, res) => {
+    docPages.save();
+    res.sendStatus(200);
+});
+
 const PORT = 8080;
 app.listen(PORT, (error) => {
     if (error) {
