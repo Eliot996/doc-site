@@ -9,7 +9,7 @@ const codeBlock    = fs.readFileSync("./public/components/doc-parts/codeBlock.ht
 const textBlock    = fs.readFileSync("./public/components/doc-parts/textBlock.html").toString();
 
 function renderPage(page, config={}) {
-    const headCompiled = head.replace("$TAB_TITLE", config.tabTitle || "Upper")
+    const headCompiled = head.replace("$TAB_TITLE", config.tabTitle || "Doc-Site")
                              .replace("$CSS_LINK",  config.cssLink  || "");
 
     return headCompiled + page + footer;
@@ -17,6 +17,25 @@ function renderPage(page, config={}) {
 
 function buildAndPopulateDocPage(docPage) {
     console.log(docPage);
+    let content = '';
+    
+    docPage.segments.forEach(segment => {
+        switch (segment.type) {
+            case 'text':
+                content += textBlock.replace("$CONTENT", escape(segment.content).replace(/(\r\n|\n|\r)/gm, '<br/>')); 
+                break;
+            case 'code':
+                content += codeBlock.replace("$CONTENT", escape(segment.content));
+                break;
+            default:
+                break;
+        }
+    });
+
+    content = docPageFrame.replace('$SEGMENTS', content)
+                          .replace('$TITLE', docPage.title);
+    
+    return renderPage(content, {tabTitle: docPage + '| Doc-Site'});
 }
 
 export default { renderPage, buildAndPopulateDocPage };
