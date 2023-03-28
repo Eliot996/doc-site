@@ -26,6 +26,10 @@ function get(pageTitle) {
     return foundPage.compiledPage || templateEngine.buildAndPopulateDocPage(foundPage);
 }
 
+function getAll() {
+    return pages.map(page => { return { id: page.id, title: page.title } })
+}
+
 function save() {
     fs.writeFileSync("./utils/docpages/pages.json", JSON.stringify(
         pages.map((page) => {
@@ -35,4 +39,4 @@ function save() {
     segments.save();
 }
 
-export default {create, get, save};
+export default {create, get, getAll, save};

@@ -30,6 +30,10 @@ app.get("/api/save", (req, res) => {
     res.sendStatus(200);
 });
 
+app.get("/api/docPages", (req, res) => {
+    res.send(JSON.stringify(docPages.getAll()));
+});
+
 const PORT = 8080;
 app.listen(PORT, (error) => {
     if (error) {
