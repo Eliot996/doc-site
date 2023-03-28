@@ -1,7 +1,10 @@
-import segments from "./segments/segments.js"
+import fs from "fs";
+
+import segments from "./segments/segments.js";
 import templateEngine from "../templateEngine/templateEngine.js";
 
-const pages = [];
+import pages from "./pages.json" assert {type: "json"};
+
 let pageCount = pages.reduce((accumulator, current) => accumulator < current.id ? current.id : accumulator, 0);
 
 function create(page) {
@@ -19,7 +22,12 @@ function get(pageTitle) {
         foundPage.segments = segments.get(foundPage.id);
     }
 
-    return foundPage.compiledPage;
+    return foundPage.compiledPage || templateEngine.buildAndPopulateDocPage(foundPage);
 }
 
-export default {create, get};
+function save() {
+    fs.writeFileSync("./utils/docpages/pages.json", JSON.stringify(pages));
+    segments.save();
+}
+
+export default {create, get, save};
