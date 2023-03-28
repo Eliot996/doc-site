@@ -36,7 +36,7 @@ function buildAndPopulateDocPage(docPage) {
     content = docPageFrame.replace('$SEGMENTS', content)
                           .replace('$TITLE', docPage.title);
     
-    return renderPage(content, {tabTitle: docPage + '| Doc-Site'});
+    return renderPage(content, {tabTitle: docPage.title + ' | Doc-Site'});
 }
 
 export default { renderPage, buildAndPopulateDocPage };
