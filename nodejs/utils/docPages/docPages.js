@@ -6,9 +6,10 @@ let pageCount = pages.reduce((accumulator, current) => accumulator < current.id 
 
 function create(page) {
     page.id = ++pageCount;
-    pages.push({id: page.id, title: page.title})
+
     segments.create(page.segments, page.id);
-    templateEngine.buildAndPopulateDocPage(page);
+
+    pages.push({id: page.id, title: page.title, compiledPage: templateEngine.buildAndPopulateDocPage(page)})
 }
 
 function get(pageTitle) {
@@ -18,7 +19,7 @@ function get(pageTitle) {
         foundPage.segments = segments.get(foundPage.id);
     }
 
-    return foundPage;
+    return foundPage.compiledPage;
 }
 
 export default {create, get};
