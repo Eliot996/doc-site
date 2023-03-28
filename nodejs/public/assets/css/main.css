@@ -1,0 +1,39 @@
+body {
+    background-color: gray;
+}
+
+#main-header {
+	display: flex;
+    flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+	flex-wrap: wrap;
+    border-bottom: solid rebeccapurple;
+}
+
+#main-nav ul {
+	margin: 1em 0 .5em;
+	text-align: center;
+}
+
+#main-nav li {
+	display: inline;
+}
+
+#main-nav a {
+    text-decoration: none;
+    color: black;
+    background-color: darkgray;
+    border-radius: 5px;
+	display: inline-block;
+	padding: .5em 1.5em;
+}
+
+#main-nav a:hover {
+    text-decoration: none;
+    color: black;
+    background-color: rebeccapurple;
+    border-radius: 5px;
+	display: inline-block;
+	padding: .5em 1.5em;
+}
