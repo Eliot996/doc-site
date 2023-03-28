@@ -1,15 +1,25 @@
 import express from "express";
 import path from "path";
+import fs from "fs";
 
 import docPages from "./utils/docPages/docPages.js"
+import templateEngine from "./utils/templateEngine/templateEngine.js";
 
 const app = express();
 
 app.use(express.static("public"));
 app.use(express.json());
 
+// Pages
+const frontpage = fs.readFileSync("./public/pages/frontpage/frontpage.html").toString();
+const newDocPage = fs.readFileSync("./public/pages/newDocPage/newDocPage.html").toString();
+
+// Compiled pages
+const frontpageCompiled = templateEngine.renderPage(frontpage, {tabTitle: "Welcome | Doc-Site"})
+const newDocPageCompiled = templateEngine.renderPage(newDocPage, {tabTitle: "Make a new doc page | Doc-Site"})
+
 app.get("/", (req, res) => {
-    res.sendFile(path.resolve("public/pages/frontpage/frontpage.html"));
+    res.send(frontpageCompiled);
 });
 
 app.get("/docs/:pageTitle", (req, res) => {
@@ -17,7 +27,7 @@ app.get("/docs/:pageTitle", (req, res) => {
 });  
 
 app.get("/new", (req, res) => {
-    res.sendFile(path.resolve("public/pages/newDocPage/newDocPage.html"));
+    res.send(newDocPageCompiled);
 });  
 
 app.post("/api/segments", (req, res) => {
