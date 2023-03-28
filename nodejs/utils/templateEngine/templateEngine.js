@@ -2,6 +2,7 @@ import fs from "fs";
 import escape from "escape-html";
 
 const head   = fs.readFileSync("./public/components/head/head.html").toString();
+const header = fs.readFileSync("./public/components/header/header.html").toString();
 const footer = fs.readFileSync("./public/components/footer/footer.html").toString();
 
 const docPageFrame = fs.readFileSync("./public/components/doc-parts/frame.html").toString();
@@ -12,7 +13,7 @@ function renderPage(page, config={}) {
     const headCompiled = head.replace("$TAB_TITLE", config.tabTitle || "Doc-Site")
                              .replace("$CSS_LINK",  config.cssLink  || "");
 
-    return headCompiled + page + footer;
+    return headCompiled + header + page + footer;
 }
 
 function buildAndPopulateDocPage(docPage) {
