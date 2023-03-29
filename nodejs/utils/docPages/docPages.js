@@ -16,7 +16,9 @@ function create(page) {
 
     segments.create(page.segments, page.id);
 
-    pages.push({id: page.id, title: page.title, compiledPage: templateEngine.buildAndPopulateDocPage(page)})
+    pages.push({id: page.id, title: page.title, compiledPage: templateEngine.buildAndPopulateDocPage(page)});
+
+    return page.title;
 }
 
 function get(pageTitle) {

@@ -87,13 +87,13 @@ function auto_height(elem) {
 }
 
 function save() {
-    fetch("/api/segments", {
+    fetch("/api/pages", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({title: document.getElementById("title").value, segments: segments}),
-    });
+    }).then((response) => response.json()).then((result) => {document.location = "/docs/" + result.title});
 }
 
 document.getElementById("title").addEventListener("input", 

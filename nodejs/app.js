@@ -30,9 +30,9 @@ app.get("/new", (req, res) => {
     res.send(newDocPageCompiled);
 });  
 
-app.post("/api/segments", (req, res) => {
-    docPages.create(req.body);
-    res.sendStatus(200);
+app.post("/api/pages", (req, res) => {
+    const title = docPages.create(req.body);
+    res.send({title: title});
 });  
 
 app.get("/api/save", (req, res) => {
