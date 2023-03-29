@@ -6,8 +6,7 @@ import templateEngine from "../templateEngine/templateEngine.js";
 const pages = JSON.parse(fs.readFileSync("./utils/docPages/pages.json"));
 
 pages.forEach(page => {
-    page.segments = segments.get(page.id); 
-    page.compiledPage = templateEngine.buildAndPopulateDocPage(page);
+    page.compiledPage = templateEngine.buildAndPopulateDocPage({...page, segments: segments.get(page.id)});
 });
 
 let pageCount = pages.reduce((accumulator, current) => accumulator < current.id ? current.id : accumulator, 0);
@@ -22,12 +21,9 @@ function create(page) {
 
 function get(pageTitle) {
     const foundPage = pages.find((page) => pageTitle === page.title);
+    const pageWithSegments =  {...foundPage, segments: segments.get(foundPage.id)};
 
-    if (foundPage) {
-        foundPage.segments = segments.get(foundPage.id);
-    }
-
-    return foundPage.compiledPage;
+    return pageWithSegments.compiledPage;
 }
 
 function getAll() {
