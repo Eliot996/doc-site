@@ -21,9 +21,8 @@ function create(page) {
 
 function get(pageTitle) {
     const foundPage = pages.find((page) => pageTitle === page.title);
-    const pageWithSegments =  {...foundPage, segments: segments.get(foundPage.id)};
 
-    return pageWithSegments.compiledPage;
+    return foundPage.compiledPage;
 }
 
 function getAll() {
