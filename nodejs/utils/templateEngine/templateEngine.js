@@ -17,7 +17,6 @@ function renderPage(page, config={}) {
 }
 
 function buildAndPopulateDocPage(docPage) {
-    console.log(docPage);
     let content = '';
     
     docPage.segments.forEach(segment => {
