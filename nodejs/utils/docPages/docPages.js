@@ -3,7 +3,7 @@ import fs from "fs";
 import segments from "./segments/segments.js";
 import templateEngine from "../templateEngine/templateEngine.js";
 
-const pages = JSON.parse(fs.readFileSync("./utils/docPages/pages.json"));
+let pages = JSON.parse(fs.readFileSync("./utils/docPages/pages.json"));
 
 pages.forEach(page => {
     page.compiledPage = templateEngine.buildAndPopulateDocPage({...page, segments: segments.get(page.id)});
@@ -31,6 +31,15 @@ function getAll() {
     return pages.map(page => { return { id: page.id, title: page.title } })
 }
 
+function deletePage(id) {
+    const page = pages.find((page) => page.id === id);
+    
+    if (page) {
+        pages = pages.filter((p) => p !== page);
+        segments.deleteSegments(page.id)
+    }
+}
+
 function save() {
     fs.writeFileSync("./utils/docpages/pages.json", JSON.stringify(
         pages.map((page) => {
@@ -40,4 +49,4 @@ function save() {
     segments.save();
 }
 
-export default {create, get, getAll, save};
+export default {create, get, getAll, save, deletePage};

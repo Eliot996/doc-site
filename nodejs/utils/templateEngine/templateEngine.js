@@ -33,7 +33,8 @@ function buildAndPopulateDocPage(docPage) {
     });
 
     content = docPageFrame.replace('$SEGMENTS', content)
-                          .replace('$TITLE', docPage.title);
+                          .replace('$TITLE', docPage.title)
+                          .replace('$PAGE_ID', docPage.id);
     
     return renderPage(content, {tabTitle: docPage.title + ' | Doc-Site'});
 }

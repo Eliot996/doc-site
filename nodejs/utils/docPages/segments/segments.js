@@ -1,6 +1,6 @@
 import fs from "fs";
 
-import segments from "./segments.json" assert {type: "json"};
+let segments = JSON.parse(fs.readFileSync("./utils/docPages/segments/segments.json"));
 
 let segmentCount = segments.reduce((accumulator, current) => accumulator < current.id ? current.id : accumulator, 0);
 
@@ -20,4 +20,8 @@ function save() {
     fs.writeFileSync("./utils/docPages/segments/segments.json", JSON.stringify(segments));
 }
 
-export default {create, get, save};
+function deleteSegments(pageId) {
+    segments = segments.filter((segments) => segments.pageId !== pageId);
+}
+
+export default {create, get, save, deleteSegments};

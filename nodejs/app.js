@@ -1,5 +1,4 @@
 import express from "express";
-import path from "path";
 import fs from "fs";
 
 import docPages from "./utils/docPages/docPages.js"
@@ -33,7 +32,12 @@ app.get("/new", (req, res) => {
 app.post("/api/pages", (req, res) => {
     const title = docPages.create(req.body);
     res.send({title: title});
-});  
+}); 
+
+app.delete("/api/pages/:id", (req, res) => {
+    docPages.deletePage(Number(req.params.id));
+    res.sendStatus(200);
+}); 
 
 app.get("/api/save", (req, res) => {
     docPages.save();

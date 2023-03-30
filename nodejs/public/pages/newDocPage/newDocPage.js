@@ -93,7 +93,9 @@ function save() {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({title: document.getElementById("title").value, segments: segments}),
-    }).then((response) => response.json()).then((result) => {document.location = "/docs/" + result.title});
+    })
+        .then((response) => response.json())
+        .then((result) => {document.location = "/docs/" + result.title});
 }
 
 document.getElementById("title").addEventListener("input", 
