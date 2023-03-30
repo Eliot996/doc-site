@@ -13,11 +13,13 @@ app.use(express.json());
 const frontpage = fs.readFileSync("./public/pages/frontpage/frontpage.html").toString();
 const newDocPage = fs.readFileSync("./public/pages/newDocPage/newDocPage.html").toString();
 const loginPage = fs.readFileSync("./public/pages/login/login.html").toString();
+const signupPage = fs.readFileSync("./public/pages/signup/signup.html").toString();
 
 // Compiled pages
 const frontpageCompiled = templateEngine.renderPage(frontpage, {tabTitle: "Welcome | Doc-Site"});
 const newDocPageCompiled = templateEngine.renderPage(newDocPage, {tabTitle: "Make a new doc page | Doc-Site"});
 const loginPageCompiled = templateEngine.renderPage(loginPage, {tabTitle: "Login | Doc-Site"});
+const signupPageCompiled = templateEngine.renderPage(signupPage, {tabTitle: "Sign up now | Doc-Site"});
 
 app.get("/", (req, res) => {
     res.send(frontpageCompiled);
@@ -34,6 +36,10 @@ app.get("/new", (req, res) => {
 app.get("/login", (req, res) => {
     res.send(loginPageCompiled);
 });  
+
+app.get("/signup", (req, res) => {
+    res.send(signupPageCompiled);
+}); 
 
 app.post("/api/pages", (req, res) => {
     const title = docPages.create(req.body);
